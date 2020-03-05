@@ -2,36 +2,31 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class Hello extends Component {
-  render() {
-    return <h1>{this.props.title}</h1>
+class Contador extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      contador: this.props.contadorInicial ? this.props.contadorInicial : 0
+    }
+    setInterval(() => {
+      this.setState({ contador: this.state.contador + 1 })
+    }, 1000)
   }
 
-}
-
-class Text extends Component {
   render() {
-    /* Se recomienda hacer la destructuracion alfabeticamente
-    Las props se consideran inmutables, ya que se trata como una funcion pura
-    */
-    const {
-      title,
-      isActivated,
-      arrayofNumber,
-      multiply,
-      objectWhithInfo
-    } = this.props
-
-    //const textoSegunBool = isActivated ? 'On' : 'Off'
-    const mappedNumbers = arrayofNumber.map(multiply)
-
+    const contador = 0
     return (
       <div>
-        {title}
-        <p>{mappedNumbers.join(', ')}</p>
-        <p>{objectWhithInfo.key} </p>
+        <ContadorNumero numero={this.state.contador}></ContadorNumero>
       </div>
     )
+  }
+}
+
+class ContadorNumero extends Component {
+  render() {
+    return <span>{this.props.numero}</span>
   }
 }
 
@@ -40,16 +35,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Hello title='Props' />
-        {/* Se recomienda utilizar los props alfabeticamente */}
-        <Text
-        title={<h1>Hello</h1>}
-          objectWhithInfo={{ key: 'First value', key2: 'othervalue' }}
-          arrayofNumber={[2, 3, 10]}
-          multiply={(number) => number * 2}
-          text='Text lorem'
-          number={2}
-          isActivated />
+        <Contador contadorInicial={5}></Contador>
       </header>
     </div>
   );
